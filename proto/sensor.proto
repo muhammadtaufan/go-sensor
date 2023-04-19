@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option go_package = "github.com/muhammadtaufan/go-sensor/proto";
+
+service SensorService {
+    rpc SendSensorData (SensorData) returns (SensorDataResponse) {}
+}
+
+message SensorData {
+    float sensor_value = 1;
+    string sensor_type = 2;
+    string ID1 = 3;
+    int32 ID2 = 4;
+    int64 timestamp = 5;
+}
+
+message SensorDataResponse {
+    bool success = 1;
+}
