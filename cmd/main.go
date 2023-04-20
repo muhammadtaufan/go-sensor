@@ -1,19 +1,18 @@
 package main
 
 import (
+	"github.com/muhammadtaufan/go-sensor/config"
 	"github.com/muhammadtaufan/go-sensor/internal/delivery"
 	"github.com/muhammadtaufan/go-sensor/internal/usecase"
 )
 
-const (
-	address = "0.0.0.0:50051"
-)
-
 func main() {
-	serverConn, grpcClient := delivery.NewGRPCClient(address)
+	appConfig := config.LoadConfig()
+
+	serverConn, grpcClient := delivery.NewGRPCClient(appConfig.GRPCServerAddress)
 	defer serverConn.Close()
 
-	postSensorData := usecase.NewPostSensorData(grpcClient)
+	postSensorData := usecase.NewPostSensorData(grpcClient, appConfig)
 
 	frequencyUpdater := usecase.NewFrequencyUpdater()
 

@@ -6,6 +6,7 @@ require google.golang.org/grpc v1.54.0
 
 require (
 	github.com/golang/protobuf v1.5.2 // indirect
+	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo/v4 v4.10.2 // indirect
 	github.com/labstack/gommon v0.4.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
