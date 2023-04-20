@@ -1,0 +1,24 @@
+openapi: 3.0.0
+info:
+  title: GoSensor
+  version: 1.0.0
+servers:
+  - url: localhost://
+paths:
+  /000/update-frequency:
+    post:
+      tags:
+        - default
+      summary: Update Data Frequency
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                frequency: 3000
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
