@@ -1,5 +1,5 @@
 build:
-	go build -o bin/go-sensor
+	go build -o bin/go-sensor cmd/main.go
 
 run: build
 	./bin/go-sensor
