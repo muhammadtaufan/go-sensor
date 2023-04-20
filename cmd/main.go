@@ -1,15 +1,8 @@
 package main
 
 import (
-	"context"
-	"log"
-	"math/rand"
-	"time"
-
-	utils "github.com/muhammadtaufan/go-sensor/pkg"
-	sensor "github.com/muhammadtaufan/go-sensor/proto"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
+	"github.com/muhammadtaufan/go-sensor/internal/delivery"
+	"github.com/muhammadtaufan/go-sensor/internal/usecase"
 )
 
 const (
@@ -17,41 +10,16 @@ const (
 )
 
 func main() {
-	serverConn, err := grpc.Dial(address, grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		log.Fatalf("Did not connect to gRPC server: %v", err)
-	}
+	serverConn, grpcClient := delivery.NewGRPCClient(address)
 	defer serverConn.Close()
 
-	c := sensor.NewSensorServiceClient(serverConn)
+	postSensorData := usecase.NewPostSensorData(grpcClient)
 
-	// use ticker for the frequency to send data
-	ticker := time.NewTicker(10 * time.Second)
-	defer ticker.Stop()
+	frequencyUpdater := usecase.NewFrequencyUpdater()
 
-	for {
-		<-ticker.C
-		sendData(c)
-	}
-}
+	apiServer := delivery.NewAPIServer()
+	apiServer.RegisterFrequencyUpdater(frequencyUpdater)
 
-func sendData(c sensor.SensorServiceClient) {
-
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-	defer cancel()
-
-	data := &sensor.SensorData{
-		SensorValue: utils.GetRandomFloat(),
-		SensorType:  "Temperature",
-		ID1:         utils.GetRandomAlphabets(),
-		ID2:         int32(rand.Intn(10-1+1) + 1),
-		Timestamp:   time.Now().Unix(),
-	}
-
-	_, err := c.SendSensorData(ctx, data)
-	if err != nil {
-		log.Fatalf("Could not send data: %v", err)
-	}
-
-	log.Println("Data sent")
+	frequencyUpdater.Start(postSensorData)
+	apiServer.Start()
 }
