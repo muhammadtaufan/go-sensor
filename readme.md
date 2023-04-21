@@ -25,13 +25,13 @@ git clone https://github.com/muhammadtaufan/go-sensor.git
 cd go-sensor
 ```
 
-2. install dependencies:
+3. setup project:
 
 ```sh
-go mod tidy
+make setup
 ```
 
-3. build and run the service:
+4. build and run the service:
 
 ```sh
 make run

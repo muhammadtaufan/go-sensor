@@ -1,3 +1,6 @@
+setup:
+	go mod tidy
+	cp .env.sample .env
 build:
 	go build -o bin/go-sensor cmd/main.go
 
