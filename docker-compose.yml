@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  sensor_type1:
+    build: .
+    environment:
+      - GRPC_SERVER=localhost:50051
+      - SENSOR_TYPE=temperature1
+    ports:
+      - "8081:8080"
+
+  sensor_type2:
+    build: .
+    environment:
+      - GRPC_SERVER=localhost:50051
+      - SENSOR_TYPE=temperature2
+    ports:
+      - "8082:8080"
+
+  sensor_type3:
+    build: .
+    environment:
+      - GRPC_SERVER=localhost:50051
+      - SENSOR_TYPE=temperature3
+    ports:
+      - "8083:8080"
+    networks:
+      - gosensor_network
+
+  sensor_type4:
+    build: .
+    environment:
+      - GRPC_SERVER=localhost:50051
+      - SENSOR_TYPE=temperature4
+    ports:
+      - "8084:8080"
+
+  sensor_type5:
+    build: .
+    environment:
+      - GRPC_SERVER=localhost:50051
+      - SENSOR_TYPE=temperature5
+    ports:
+      - "8085:8080"
+
+  sensor_type6:
+    build: .
+    environment:
+      - GRPC_SERVER=localhost:50051
+      - SENSOR_TYPE=temperature6
+    ports:
+      - "8086:8080"
+
+  sensor_type7:
+    build: .
+    environment:
+      - GRPC_SERVER=localhost:50051
+      - SENSOR_TYPE=temperature7
+    ports:
+      - "8087:8080"
