@@ -16,9 +16,9 @@ func main() {
 
 	frequencyUpdater := usecase.NewFrequencyUpdater()
 
-	apiServer := delivery.NewAPIServer()
+	apiServer := delivery.NewAPIServer(appConfig)
 	apiServer.RegisterFrequencyUpdater(frequencyUpdater)
 
-	frequencyUpdater.Start(postSensorData)
+	go frequencyUpdater.Start(postSensorData)
 	apiServer.Start()
 }

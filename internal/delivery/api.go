@@ -4,25 +4,28 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
+	"github.com/muhammadtaufan/go-sensor/config"
 	"github.com/muhammadtaufan/go-sensor/internal/domain"
 )
 
 type APIServer struct {
 	server *echo.Echo
+	cfg    *config.Config
 }
 
 type FrequencyRequest struct {
 	Frequency int `json:"frequency"`
 }
 
-func NewAPIServer() *APIServer {
+func NewAPIServer(cfg *config.Config) *APIServer {
 	return &APIServer{
 		server: echo.New(),
+		cfg:    cfg,
 	}
 }
 
 func (aps *APIServer) Start() {
-	aps.server.Logger.Fatal(aps.server.Start(":3000"))
+	aps.server.Logger.Fatal(aps.server.Start(aps.cfg.APIerverAddress))
 }
 
 func (aps *APIServer) RegisterFrequencyUpdater(fu domain.FrequencyUpdater) {

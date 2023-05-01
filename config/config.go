@@ -9,6 +9,7 @@ import (
 
 type Config struct {
 	GRPCServerAddress string
+	APIerverAddress   string
 	SensorType        string
 }
 
@@ -20,6 +21,7 @@ func LoadConfig() *Config {
 
 	return &Config{
 		GRPCServerAddress: getEnv("GRPC_SERVER", "0.0.0.0:50051"),
+		APIerverAddress:   getEnv("API_SERVER", "0.0.0.0:3000"),
 		SensorType:        getEnv("SENSOR_TYPE", "DEFAULT"),
 	}
 }
